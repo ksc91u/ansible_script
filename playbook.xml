@@ -1,0 +1,25 @@
+- hosts: u3
+  sudo: True
+  vars_files:
+  - u3_vault.yml
+  
+  gather_facts: False
+  tasks:
+    - name: Modify apt sources.list
+      script: ./sources.sh
+      sudo: yes
+    - apt: update_cache=yes cache_valid_time=86400
+    - apt: name=screen,build-essential,mtr,zsh,git,mplayer,ffmpeg,pppoeconf,ppp update_cache=yes cache_valid_time=86400
+
+- hosts: odroid-others
+  sudo: True
+  vars_files:
+  - odroid_vault.yml
+  gather_facts: False
+
+  tasks:
+    - name: Modify apt sources.list
+      script: ./sources.sh
+      sudo: yes
+    - apt: update_cache=yes cache_valid_time=86400
+    - apt: name=screen,build-essential,mtr,zsh,git,mplayer,ffmpeg,pppoeconf,ppp update_cache=yes cache_valid_time=86400
